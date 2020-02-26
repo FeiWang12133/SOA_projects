@@ -69,7 +69,10 @@ public class ItemsResource {
     @GET
     @Path("{id}")
     @Produces(MediaType.APPLICATION_XML)
-    public ItemResource getItemResource(@PathParam("id") String id) {
-        return ItemResource.getInstance(id);
+    public String getItemResource(@PathParam("id") String id) {
+        StringBuilder sb = new StringBuilder();
+        sb.append("<item id=\""+id+"\" />");
+        
+        return sb.toString();
     }
 }

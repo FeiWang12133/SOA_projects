@@ -5,7 +5,7 @@
  */
 package dao.bank;
 
-import dao.bank.Bank;
+import dao.bank.BankAccount;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
@@ -18,13 +18,13 @@ import java.util.List;
  *
  * @author A00238100
  */
-public enum BankDao {
+public enum BankAccountDao {
     
     instance;
     
     private Connection con = null;
     
-    private BankDao() throws ClassNotFoundException{
+    private BankAccountDao() throws ClassNotFoundException{
         try{
         System.out.println("loading db driver");
             Class.forName("org.apache.derby.jdbc.ClientDriver");
@@ -47,8 +47,8 @@ public enum BankDao {
         
     }
     
-        public List<Bank> getStudents(){
-        List<Bank> customers = new ArrayList<Bank>();
+        public List<BankAccount> getStudents(){
+        List<BankAccount> customers = new ArrayList<BankAccount>();
         try{
             PreparedStatement pstmt = con.prepareStatement("select * from bank");
             ResultSet rs = pstmt.executeQuery();
@@ -86,7 +86,7 @@ public enum BankDao {
 
     }
             
-    public BankAccount getAccountDetails(String branchCode, String accountNo){
+    public BankAccount getAccountDetails(String branch_ode, String account_number){
         
     }
 

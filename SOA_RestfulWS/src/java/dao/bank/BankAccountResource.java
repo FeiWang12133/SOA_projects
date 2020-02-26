@@ -3,11 +3,12 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package dao.student;
+package dao.bank;
 
-import dao.student.StudentDao;
-import dao.student.Student;
+import dao.bank.BankAccount;
+import dao.bank.BankAccountDao;
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
 import java.util.TreeSet;
@@ -17,7 +18,6 @@ import javax.ws.rs.DELETE;
 import javax.ws.rs.FormParam;
 import javax.ws.rs.GET;
 import javax.ws.rs.HEAD;
-import static javax.ws.rs.HttpMethod.PUT;
 import javax.ws.rs.OPTIONS;
 import javax.ws.rs.POST;
 import javax.ws.rs.PUT;
@@ -32,21 +32,19 @@ import javax.ws.rs.core.Response;
  *
  * @author A00238100
  */
-@Path("students")
-public class StudentsResource {
-    
+public class BankAccountResource {
     @GET
     @Produces({MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON})
-    public List<Student> getStudents(){
+    public ArrayList<BankAccount> getAllAccounts(){
         System.out.println("Hello");
-        return StudentDao.instance.getStudents();
+        return BankAccountDao.instance.getAllAccounts();
     }
     
     @GET
     @Produces({MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON})
-    @Path("{studentId}")
-    public List<Student> getStudent(@PathParam("studentId") String id){
-        return StudentDao.instance.getStudent(Integer.parseInt(id));
+    @Path("{branch_code}")
+    public BankAccount getAccountDetails(@PathParam("branch_code") String branch_code, String account_number ){
+        return BankAccountDao.instance.getAccountDetails(Integer.parseInt(branch_code, account_number));
     }
     
     @HEAD
@@ -113,4 +111,3 @@ public class StudentsResource {
     }
     
 }
-    

@@ -14,7 +14,7 @@ import javax.xml.bind.annotation.XmlType;
  */
 @XmlRootElement(name="bank")
 @XmlType(propOrder={"branch_code", "account_number", "cust_name", "cust_address" , "cust_rating", "balance"})
-public class Bank {
+public class BankAccount {
     private int branch_code;
     private int account_number;
     private String cust_name;
@@ -22,7 +22,13 @@ public class Bank {
     private Double cust_rating;
     private Double balance;
     
-    public Bank(int branch_code, int account_number, String cust_name, String cust_address, Double cust_rating, Double balance){
+    public BankAccount(int branch_code, int account_number, String cust_name, String cust_address, Double cust_rating, Double balance){
+        this.branch_code = branch_code;
+        this.account_number = account_number;
+        this.cust_name = cust_name;
+        this.cust_address = cust_address;
+        this.cust_rating = cust_rating;
+        this.balance = balance;
         
     }
 

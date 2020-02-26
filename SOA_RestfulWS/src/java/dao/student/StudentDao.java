@@ -25,7 +25,7 @@ import java.util.Map;
 public enum StudentDao {
     instance;
         private Connection con = null;
-    private Map<Integer, Student> studentsMap = new HashMap<Integer, Student>();
+    
     
     private StudentDao(){
         try{
@@ -61,6 +61,8 @@ public enum StudentDao {
                 String name = rs.getString("name");
                 String address = rs.getString("address");
                 String course = rs.getString("course");
+                Student student = new Student(id, name, address, course);
+                students.add(student);
             }
         }catch(SQLException ex){
             System.err.println("\nSQLException");
@@ -69,28 +71,59 @@ public enum StudentDao {
         return students;
     }
     
-    public Student editStudent(int id){
-        return studentsMap.get(id);
-    }
     
-    public Student getStudent(int id){
-        return studentsMap.get(id);
+    public List<Student> getStudent(int id) {
+        List<Student> students = new ArrayList<Student>();
+        try {
+            PreparedStatement pstmt = con.prepareStatement("Select * from student where id=" + id);
+            ResultSet rs = pstmt.executeQuery();
+
+            while (rs.next()) {
+
+                String name = rs.getString("name");
+                String address = rs.getString("address");
+                String course = rs.getString("course");
+                Student student = new Student(id, name, address, course);
+                students.add(student);
+            }
+        } catch (SQLException ex) {
+            System.out.println("get student did not work");
+        }
+        return students;
     }
-    public void create(Student student){
-        studentsMap.put(student.getId(), student);
+
+    public void create(Student student) {
+
+        try {
+            PreparedStatement pstmt = con.prepareStatement("SELECT MAX(id) AS \"MaxId\" FROM student");
+            ResultSet rs = pstmt.executeQuery();
+            rs.next();
+            int id = rs.getInt("MaxId");
+            id += 1;
+            System.out.println(id);
+            String name = student.getName();
+            String address = student.getAddress();
+            String course = student.getCourse();
+            PreparedStatement pstmt1 = con.prepareStatement("insert into student values(" + id + ",'" + name + "','" + address + "','" + course + "')");
+            pstmt1.executeUpdate();
+
+        } catch (SQLException ex) {
+            System.out.println("get student did not work");
+        }
+
     }
-    
-    public Student getNextId(int id){
-        return studentsMap.get(id);
-    }
-    
-    public void delete(int id){
-        if(studentsMap.remove(id) != null){
-            System.out.println("Removed");
-            
-        }else{
-            System.out.println("Not Removed");
+
+    public void delete(int id) {
+        try {
+            PreparedStatement pstmt = con.prepareStatement("delete from student where id=" + id);
+            pstmt.executeUpdate();
+
+        } catch (SQLException ex) {
+            System.out.println("delete did not work");
         }
     }
+    
+   
+    
     
 }
