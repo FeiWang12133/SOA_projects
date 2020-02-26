@@ -42,8 +42,8 @@ public class BankAccountResource {
     
     @GET
     @Produces({MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON})
-    @Path("{branch_code}")
-    public BankAccount getAccountDetails(@PathParam("branch_code") String branch_code, String account_number ){
+    @Path("{branch_code, account_number}")
+    public BankAccount getAccountDetails(@PathParam("branch_code, account_number") String branch_code, String account_number ){
         return BankAccountDao.instance.getAccountDetails(Integer.parseInt(branch_code, account_number));
     }
     
@@ -74,19 +74,21 @@ public class BankAccountResource {
     @Produces(MediaType.TEXT_HTML)
     @Consumes(MediaType.APPLICATION_FORM_URLENCODED)
     public void postStudent(
-            @FormParam("id") String id,
-            @FormParam("name") String name,
-            @FormParam("address") String address,
-            @FormParam("course") String course,
+            @FormParam("branch_code") String branch_code,
+            @FormParam("account_number") String account_number,
+            @FormParam("cust_name") String cust_name,
+            @FormParam("cust_rating") Double cust_rating,
+            @FormParam("cust_address") String cust_address,
+            @FormParam("balance") Double balance,
             @Context HttpServletResponse servletResponse) throws IOException {
         
         
-        Student student = new Student();
-        student.setId(Integer.parseInt(id));
-        student.setName(name);
-        student.setAddress(address);
-        student.setCourse(course);
-        StudentDao.instance.create(student);
+        BankAccount bankAccount = new BankAccount();
+        BankAccount.setId(Integer.parseInt(id));
+        BankAccount.setName(name);
+        BankAccount.setAddress(address);
+        BankAccount.setCourse(course);
+        BankAccountDao.instance.create(student);
         servletResponse.sendRedirect("../index.html");
         
         

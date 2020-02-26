@@ -29,6 +29,7 @@ public class ApplicationConfig extends Application {
      * If required, comment out calling this method in getClasses().
      */
     private void addRestResourceClasses(Set<Class<?>> resources) {
+        resources.add(dao.bank.BankAccountResource.class);
         resources.add(dao.student.StudentsResource.class);
         resources.add(restfulpkg.ItemResource.class);
         resources.add(restfulpkg.ItemsResource.class);
